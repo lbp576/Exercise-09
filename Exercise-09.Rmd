@@ -92,26 +92,35 @@ b1a
 b0a <- mean(e$ECV)- b1a*mean(e$Group_size)
 b0a
 
-residuals <- e$ECV- (b0 + b1) 
+residuals <- e$ECV- (b0a + b1a) 
 
-#Confirm that you get the same results using the 'Im()' function 
+#Confirm that you get the same results using the 'lm()' function 
 
 model1 <- lm(formula = ECV~ Group_size, data =e)
 model1
 
 #Repeat the analysis above for different groups of primates (catarrhines, platyrrhines, strepsirhines) separately. Do your regression coefficients differ?
 
-e_mod <- e %>% filter(!is.na(ECV) & !is.na(Group_size) & Taxonomic_group=="Strepsirhini")
-model <- lm(formula = ECV~ Group_size, data =e_mod)
+e_mod1 <- e %>% filter(!is.na(ECV) & !is.na(Group_size) & Taxonomic_group=="Strepsirhini")
+model <- lm(formula = ECV~ Group_size, data =e_mod1)
 model
 
-e_mod <- e %>% filter(!is.na(ECV) & !is.na(Group_size) & Taxonomic_group=="Platyrrhini")
-model <- lm(formula = ECV~ Group_size, data =e_mod)
+e_mod2 <- e %>% filter(!is.na(ECV) & !is.na(Group_size) & Taxonomic_group=="Platyrrhini")
+model <- lm(formula = ECV~ Group_size, data =e_mod2)
 model
 
-e_mod <- e %>% filter(!is.na(ECV) & !is.na(Group_size) & Taxonomic_group=="Catarrhini")
-model <- lm(formula = ECV~ Group_size, data =e_mod)
+e_mod3 <- e %>% filter(!is.na(ECV) & !is.na(Group_size) & Taxonomic_group=="Catarrhini")
+model <- lm(formula = ECV~ Group_size, data =e_mod3)
 model
+
+#Do your regression coefficients differ among groups? How might you determine this?
+
+#Yes the regression coefficients and intercepts differ among groups! We determined this using lm function on each filtered data-set. 
+
+
+
+
+#For your first regression of ECV on social group size, calculate the standard error for the slope coefficient, the 95% CI, 
 
 n <- nrow(e)
 mean_x = mean(e$Group_size)
@@ -126,7 +135,7 @@ den
 se = (num/den)^(1/2)
 se
 
-#For your first regression of ECV on social group size, calculate the standard error for the slope coefficient, the 95% CI, 
+
 m.summary <- tidy(model1)
 m.summary 
 
